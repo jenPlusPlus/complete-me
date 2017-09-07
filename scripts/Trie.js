@@ -22,6 +22,9 @@ export default class Trie {
       }
     }
   }
+  count () {
+    return this.wordCount;
+  }
   getPrefixNode (letters) {
     let currNode = this.root;
 
