@@ -26,7 +26,8 @@ describe('Trie', () => {
     trie.insert('a');
 
     expect(trie.wordCount).to.equal(1);
-    expect(trie.root.children).to.deep.equal({a: { value: 'a', children: {}, isWord: true }});
+    expect(trie.root.children).to.deep.equal({a: { value: 'a',
+      children: {}, isWord: true }});
   });
 
   it('should add an entire library, for a wordCount of 235886', (done) => {
