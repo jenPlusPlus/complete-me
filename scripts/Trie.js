@@ -2,13 +2,15 @@ import Node from './Node.js';
 
 export default class Trie {
   constructor () {
-    this.root = null;
+    this.root = new Node();
     this.wordCount = 0;
   }
   insert (word) {
 
     let currNode = this.root;
+
     let letters = [...word.toLowerCase()];
+
 
     for (let i = 0; i < letters.length; i++) {
       if (!currNode.children[letters[i]]) {
