@@ -22,17 +22,20 @@ describe('Trie', () => {
   it('should be able to add a new node if the letter does not exist', () => {
     let trie = new Trie();
 
+    expect(trie.wordCount).to.equal(0);
     trie.insert('a');
 
+    expect(trie.wordCount).to.equal(1);
     expect(trie.root.children).to.deep.equal({a: { value: 'a', children: {}, isWord: true }});
   });
 
-  it('should add an entire library, for a wordCount of 235886', () => {
-
+  it('should add an entire library, for a wordCount of 235886', (done) => {
     let trie = new Trie();
 
     trie.populate(dictionary);
 
     expect(trie.wordCount).to.equal(235886);
-  });
+
+    done();
+  }).timeout(25000);
 })
