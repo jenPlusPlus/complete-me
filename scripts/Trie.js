@@ -28,6 +28,9 @@ export default class Trie {
   getPrefixNode (letters) {
     let currNode = this.root;
 
+    if (!currNode.children[letters[0]]) {
+      return null;
+    }
     for (let i = 0; i < letters.length; i++) {
       if (currNode.children[letters[i]]) {
         currNode = currNode.children[letters[i]];
@@ -40,21 +43,23 @@ export default class Trie {
     let suggestions = [];
     let currNode = this.getPrefixNode(letters);
 
-    let traverse = (prefix, node) => {
-      let keys = Object.keys(node.children);
+    if (currNode) {
+      let traverse = (prefix, node) => {
+        let keys = Object.keys(node.children);
 
-      for (let j = 0; j < keys.length; j++) {
-        let child = node.children[keys[j]];
-        let newString = prefix + child.value;
+        for (let j = 0; j < keys.length; j++) {
+          let child = node.children[keys[j]];
+          let newString = prefix + child.value;
 
-        if (child.isWord) {
-          suggestions.push(newString);
+          if (child.isWord) {
+            suggestions.push(newString);
+          }
+          traverse(newString, child);
         }
-        traverse(newString, child);
-      }
-    };
+      };
 
-    traverse(prefix, currNode);
+      traverse(prefix, currNode);
+    }
     return suggestions;
   }
 }
