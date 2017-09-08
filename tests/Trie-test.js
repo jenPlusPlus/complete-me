@@ -1,6 +1,5 @@
 import fs from 'fs';
 import { expect } from 'chai';
-import Node from '../scripts/Node';
 import Trie from '../scripts/Trie';
 
 const text = "/usr/share/dict/words"
@@ -39,4 +38,59 @@ describe('Trie', () => {
 
     done();
   }).timeout(25000);
+
+  it('should return an empty array if the prefix is not in the Trie', () => {
+    let trie = new Trie();
+
+    trie.insert('apple');
+    let suggestions = trie.suggest('b');
+
+    expect(suggestions).to.deep.equal([]);
+  });
+
+  it('should return an array of suggested words', () => {
+    let trie = new Trie();
+
+    trie.insert('apple');
+    trie.insert('application');
+    trie.insert('adam');
+    trie.insert('alice');
+    trie.insert('allison');
+    trie.insert('alex');
+    trie.insert('amazing');
+    let suggestions = trie.suggest('ap');
+
+    expect(suggestions).to.deep.equal(['apple', 'application']);
+
+    suggestions = trie.suggest('al');
+
+    expect(suggestions).to.deep.equal(['alice', 'allison', 'alex']);
+  });
+
+  it('should return an array of suggested words, sorted by frequently selected', () => {
+    let trie = new Trie();
+
+    trie.insert('apple');
+    trie.insert('application');
+    trie.insert('adam');
+    trie.insert('alice');
+    trie.insert('allison');
+    trie.insert('alex');
+    trie.insert('amazing');
+
+    trie.select('alice');
+
+    let suggestions = trie.suggest('al');
+    
+    expect(suggestions).to.deep.equal(['alice', 'allison', 'alex']);
+
+    trie.select('allison');
+    trie.select('allison');
+
+
+    suggestions = trie.suggest('al');
+
+    expect(suggestions).to.deep.equal(['allison', 'alice', 'alex']);
+  });
+
 })
