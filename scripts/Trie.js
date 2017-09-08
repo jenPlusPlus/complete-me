@@ -19,8 +19,10 @@ export default class Trie {
 
       currNode = currNode.children[letters[i]];
       if (i === letters.length - 1) {
-        currNode.isWord = true;
-        this.wordCount += 1;
+        if (!currNode.isWord) {
+          currNode.isWord = true;
+          this.wordCount += 1;
+        }
       }
     }
   }
