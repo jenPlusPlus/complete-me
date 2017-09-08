@@ -3,5 +3,6 @@ export default class Node {
     this.value = value;
     this.children = {};
     this.isWord = false;
+    this.frequency = 0;
   }
 }

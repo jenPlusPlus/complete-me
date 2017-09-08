@@ -10,7 +10,7 @@ describe('Trie', () => {
   it('should have a root property that defaults to a new Node', () => {
     let trie = new Trie();
 
-    expect(trie.root).to.deep.equal({ value: null, children: {}, isWord: false });
+    expect(trie.root).to.deep.equal({ value: null, children: {}, isWord: false, frequency: 0 });
   });
 
   it('should begin with a word count of 0', () => {
@@ -26,7 +26,8 @@ describe('Trie', () => {
     trie.insert('a');
 
     expect(trie.wordCount).to.equal(1);
-    expect(trie.root.children).to.deep.equal({a: { value: 'a', children: {}, isWord: true }});
+    expect(trie.root.children).to.deep.equal({a: { value: 'a',
+      children: {}, isWord: true, frequency: 0 }});
   });
 
   it('should add an entire library, for a wordCount of 235886', (done) => {

@@ -54,7 +54,7 @@ export default class Trie {
           let newString = prefix + child.value;
 
           if (child.isWord) {
-            suggestions.push(newString);
+            suggestions.push( {word: newString, frequency: child.frequency} );
           }
           traverse(newString, child);
         }
@@ -62,11 +62,22 @@ export default class Trie {
 
       traverse(prefix, currNode);
     }
-    return suggestions;
+    return suggestions.sort( (a, b) => {
+      return b.frequency - a.frequency;
+    }).reduce( (newArray, object) => {
+      newArray.push(object.word);
+      return newArray;
+    }, []);
   }
   populate(dictionary) {
     dictionary.forEach(word => {
       this.insert(word);
     })
+  }
+  select(selection) {
+    const newString = [...selection];
+    let node = this.getPrefixNode(newString);
+
+    node.isWord ? node.frequency++ : null;
   }
 }
